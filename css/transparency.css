@@ -1,0 +1,32 @@
+/* 白天模式：主页文章卡片、侧边栏卡片、文章页、标签页、归档页等 */
+#aside_content .card-widget,
+#recent-posts > .recent-post-items > .recent-post-item,
+.layout_page > div:first-child:not(.recent-posts),
+.layout_post > #page,
+.layout_post > #post,
+.read-mode .layout_post > #post,
+#aside-content > .card-widget,
+#aside-content > .sticky_layout > .card-widget,
+.layout > #post,
+.layout > #page,
+.layout > #tag,
+.layout > #archive {
+    /* 0.8 代表 80% 的不透明度，你可以根据喜好调整（0~1之间） */
+    background: rgba(255, 255, 255, 0.9);
+}
+
+/* 黑夜模式：对应的卡片背景 */
+[data-theme='dark'] #recent-posts > .recent-post-item,
+[data-theme='dark'] .card-widget,
+[data-theme='dark'] div#post,
+[data-theme='dark'] div#page,
+[data-theme='dark'] div#archive,
+[data-theme='dark'] div#tag,
+[data-theme='dark'] div#category {
+    /* 黑夜模式下建议使用深色半透明背景，保证文字可读性 */
+    background: rgba(0, 0, 0, 0.6) !important;
+}
+/* 强制隐藏首页顶部提示箭头 */
+#scroll-down {
+    display: none !important;
+}

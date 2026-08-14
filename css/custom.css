@@ -1,0 +1,158 @@
+.calendar-day:not(.empty) {
+    /* 1. 核心：固定死宽高，不要给浏览器计算的机会 */
+    width: 30px;   /* 建议稍微改大一点点，或者保持你原来的 26px */
+    height: 30px;  /* 必须与 width 一致 */
+    
+    /* 2. 核心：使用 Flex 布局居中，这是防止文字抖动的关键 */
+    display: flex;
+    justify-content: center; /* 水平居中 */
+    align-items: center;     /* 垂直居中 */
+    
+    /* 3. 核心：预留透明边框占位 */
+    border: 1px solid transparent; 
+    box-sizing: border-box; /* 确保边框算在宽高内 */
+    
+    /* 4. 保持圆角和鼠标样式 */
+    border-radius: 4px;
+    cursor: pointer;
+    
+    /* 5. 加上过渡动画 */
+    transition: all 0.2s ease;
+}/* 日历整体布局 */
+.card-calendar .calendar-header {
+  text-align: center;
+  font-size: 1.1em;
+  font-weight: bold;
+  margin-bottom: 10px;
+  color: var(--font-color);
+}
+
+/* 星期和日期的网格布局 */
+.calendar-weekdays, .calendar-days {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr); /* 7列 */
+  text-align: center;
+  gap: 4px; /* 格子间距 */
+}
+
+/* 星期表头样式 */
+.calendar-weekdays div {
+  font-size: 0.8em;
+  color: #000000;
+  padding-bottom: 5px;
+}
+
+/* 日期格子样式 */
+.calendar-day {
+  padding: 8px 0;
+  font-size: 0.9em;
+  font-weight: bold;   /* 加粗数字 */
+  color: #000000;  
+  border-radius: 0; /* 圆形背景 */
+  transition: all 0.3s;
+  cursor: default;
+}
+
+/* 今天的样式 - 高亮显示 */
+.calendar-day.active {
+    /* 1. 去掉背景色，变成空心 */
+    background-color: transparent; 
+    
+    /* 2. (颜色取色自你的参考图) */
+    border: 1px solid #3794c3; 
+    
+    /* 3. 文字颜色改成深灰色或，保证清晰 */
+    color: #333; 
+    /* 如果你想要文字也是金色的，可以把上面这行改成 color: #cda465; */
+
+    /* 4. 字体不需要加粗，图片里看起来是常规粗细 */
+    font-weight: bold; 
+
+    /* --- 保持正方形形状的设置 (保留你原来的逻辑) --- */
+    border-radius: 4px; /* 图片里的框有一点点圆角，不是直角，设小一点 */
+    width: 26px;
+    height: 26px;
+    line-height: 24px; /* 稍微调整行高以适配边框 */
+    margin: auto;
+    padding: 0;
+    
+    /* 5. 确保盒子模型计算包含边框，防止变大 */
+    box-sizing: border-box; 
+}
+
+.calendar-day:not(.empty):hover {
+    /* 1. 视觉反馈 */
+    background-color: #f5f5f5; /* 极淡灰背景 */
+    color: #333;               /* 保持文字清晰 */
+    
+    /* 2. 核心修复：用 outline 模拟边框效果 */
+    /* outline 不占据空间，不会挤压文字，也不会导致布局跳动 */
+    outline: 1px solid #4a90e2; 
+    outline-offset: -1px;      /* 让轮廓线向内收缩1px，看起来就像边框一样 */
+    
+    /* 3. 提升层级，防止被遮挡 */
+    position: relative;
+    z-index: 10;
+}
+/* 空白格不响应鼠标 */
+.calendar-day.empty:hover {
+  background-color: transparent;
+  cursor: default;
+}
+.share-main .share-facebook, .share-main .share-twitter { 
+  display: none !important; 
+}
+
+/* 音乐播放器强制显示 */
+.aplayer {
+  display: block !important;
+  visibility: visible !important;
+  z-index: 99999 !important;
+}
+
+.aplayer.aplayer-fixed {
+  z-index: 99999 !important;
+}
+/* ==========================================
+   APlayer V10：极简安全修复
+   ========================================== */
+
+/* 1. 播放器整体容器 */
+.aplayer.aplayer-fixed {
+    /* 【关键】不要设置 height！不要设置 display: flex！让浏览器自己决定高度 */
+    
+    /* 圆角与阴影 */
+    border-radius: 12px !important;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15) !important;
+    
+    /* 背景颜色 (稍微提高不透明度，防止太透导致看不清) */
+    background: rgba(255, 255, 255, 0.95) !important;
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    /* 确保层级最高 */
+    z-index: 9999 !important;
+}
+
+/* 2. 强制裁切子元素，保证圆角完美 */
+/* 这行代码会让内部的直角列表自动适应外层的圆角 */
+.aplayer.aplayer-fixed .aplayer-body,
+.aplayer.aplayer-fixed .aplayer-list {
+    border-radius: 12px !important;
+    overflow: hidden !important;
+}
+
+/* 3. 隐藏歌词区域 (如果你不需要歌词) */
+.aplayer.aplayer-fixed .aplayer-lrc {
+    display: none !important;
+}
+
+/* 4. 确保控制栏和进度条始终可见 */
+.aplayer.aplayer-fixed .aplayer-info {
+    display: block !important;
+    height: auto !important;
+}
+
+.aplayer.aplayer-fixed .aplayer-controller {
+    display: block !important;
+    height: auto !important;
+}
