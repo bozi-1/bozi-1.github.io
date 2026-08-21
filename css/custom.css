@@ -107,15 +107,15 @@
 [data-theme="dark"] .calendar,
 [data-theme="dark"] .calendar-day,
 [data-theme="dark"] .calendar-header {
-    color: #ffffff !important; 
+    color: #F5F5F5 !important; 
 }
 [data-theme="dark"] .calendar-weekdays div {
-    color: #ffffff !important; /* 强制改为浅灰色，与日期数字保持一致 */
+    color: #F5F5F5 !important; /* 强制改为浅灰色，与日期数字保持一致 */
 }
 
 /* 2. 针对具体的日期格子（就是你截图里的那个类） */
 [data-theme="dark"] .calendar-day:not(.empty) {
-    color: #ffffff !important; /* 确保数字是白色的 */
+    color: #F5F5F5 !important; /* 确保数字是白色的 */
 }
 
 /* 3. (可选) 给“今天”加个明显的背景色，防止混在黑色背景里 */
