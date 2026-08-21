@@ -109,9 +109,11 @@
 /* 1. 强制把日历里的所有文字变成白色/浅灰色 */
 [data-theme="dark"] .calendar,
 [data-theme="dark"] .calendar-day,
-[data-theme="dark"] .calendar-header,
-[data-theme="dark"] .calendar-weekdays {
+[data-theme="dark"] .calendar-header {
     color: #e0e0e0 !important; 
+}
+[data-theme="dark"] .calendar-weekdays div {
+    color: #e0e0e0 !important; /* 强制改为浅灰色，与日期数字保持一致 */
 }
 
 /* 2. 针对具体的日期格子（就是你截图里的那个类） */
