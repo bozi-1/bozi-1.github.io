@@ -103,17 +103,14 @@
   display: none !important; 
 }
 /* --- 修复暗黑模式下日历看不清的问题 START --- */
-
-/* --- 修复暗黑模式下日历看不清的问题 START --- */
-
 /* 1. 强制把日历里的所有文字变成白色/浅灰色 */
 [data-theme="dark"] .calendar,
 [data-theme="dark"] .calendar-day,
 [data-theme="dark"] .calendar-header {
-    color: #e0e0e0 !important; 
+    color: #ffffff !important; 
 }
 [data-theme="dark"] .calendar-weekdays div {
-    color: #e0e0e0 !important; /* 强制改为浅灰色，与日期数字保持一致 */
+    color: #ffffff !important; /* 强制改为浅灰色，与日期数字保持一致 */
 }
 
 /* 2. 针对具体的日期格子（就是你截图里的那个类） */
@@ -127,7 +124,6 @@
     color: #fff !important;
     border: 1px solid #4a90e2 !important; /* 加个亮一点的边框 */
 }
-
 /* --- 修复 END --- */
 
 /* 音乐播放器强制显示 */
