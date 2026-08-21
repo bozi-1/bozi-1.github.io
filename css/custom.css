@@ -107,15 +107,15 @@
 [data-theme="dark"] .calendar,
 [data-theme="dark"] .calendar-day,
 [data-theme="dark"] .calendar-header {
-    color: #F5F5F5 !important; 
+    color: #E0E0E0 !important; 
 }
 [data-theme="dark"] .calendar-weekdays div {
-    color: #F5F5F5 !important; /* 强制改为浅灰色，与日期数字保持一致 */
+    color: #E0E0E0 !important; /* 强制改为浅灰色，与日期数字保持一致 */
 }
 
 /* 2. 针对具体的日期格子（就是你截图里的那个类） */
 [data-theme="dark"] .calendar-day:not(.empty) {
-    color: #F5F5F5 !important; /* 确保数字是白色的 */
+    color: #E0E0E0 !important; /* 确保数字是白色的 */
 }
 
 /* 3. (可选) 给“今天”加个明显的背景色，防止混在黑色背景里 */
@@ -179,3 +179,34 @@
     display: block !important;
     height: auto !important;
 }
+/* --- 修复文章卡片在暗黑模式下背景太白的问题 START --- */
+
+/* 1. 把卡片背景改成深色（接近黑色的深灰） */
+[data-theme="dark"] .post-card, 
+[data-theme="dark"] .recent-post-item, 
+[data-theme="dark"] .card {
+    background-color: #1f1f1f !important; /* 深灰色背景，不刺眼 */
+    border: 1px solid #333 !important; /* 加个淡淡的边框增加层次感 */
+}
+
+/* 2. 确保卡片里的标题是白色的 */
+[data-theme="dark"] .post-card .post-title,
+[data-theme="dark"] .recent-post-item .article-title,
+[data-theme="dark"] .card .card-title {
+    color: #ffffff !important; 
+}
+
+/* 3. 确保卡片里的摘要/正文是浅灰色的（避免纯白太刺眼） */
+[data-theme="dark"] .post-card .post-content,
+[data-theme="dark"] .recent-post-item .article-content,
+[data-theme="dark"] .card .card-content {
+    color: #cccccc !important; /* 浅灰色文字 */
+}
+
+/* 4. 修复元数据（日期、分类等）的颜色 */
+[data-theme="dark"] .post-meta,
+[data-theme="dark"] .meta-info {
+    color: #999999 !important; 
+}
+
+/* --- 修复 END --- */
