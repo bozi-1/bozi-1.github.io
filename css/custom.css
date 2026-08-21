@@ -102,7 +102,35 @@
 .share-main .share-facebook, .share-main .share-twitter { 
   display: none !important; 
 }
+/* --- 修复暗黑模式下日历看不清的问题 START --- */
 
+/* 1. 针对日历整体容器和表格文字 */
+[data-theme="dark"] .calendar,
+[data-theme="dark"] .calendar-table,
+[data-theme="dark"] .calendar th,
+[data-theme="dark"] .calendar td {
+    color: #e0e0e0 !important; /* 强制文字变为浅灰色 */
+}
+
+/* 2. 针对日历的表头（星期几那一栏） */
+[data-theme="dark"] .calendar-header {
+    color: #ffffff !important;
+    border-bottom-color: #444 !important; /* 调整分割线颜色 */
+}
+
+/* 3. 针对具体的日期数字 */
+[data-theme="dark"] .calendar-day {
+    color: #cccccc !important; /* 日期数字颜色 */
+}
+
+/* 4. (可选) 针对“今天”的高亮样式，防止看不清 */
+[data-theme="dark"] .calendar-today {
+    background-color: #012c48 !important; /* 使用你截图里的按钮蓝作为背景 */
+    color: #fff !important;
+    border-radius: 50%;
+}
+
+/* --- 修复 END --- */
 /* 音乐播放器强制显示 */
 .aplayer {
   display: block !important;
