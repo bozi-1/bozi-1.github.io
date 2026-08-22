@@ -1,6 +1,6 @@
 (function() {
     // 1. 设置开始时间
-    const startTime = new Date('2025-08-18T00:00:00+08:00'); 
+    const startTime = new Date('2026-08-12T00:00:00+08:00'); 
     let footer = document.getElementById('footer');
 
     if (footer) {
@@ -14,7 +14,7 @@
             'text-align': 'center',
             'color': '#ffffff',           // 白色文字
             'background': 'rgba(0, 0, 0, 0.6)', // 半透明黑底
-            'padding': '6px 20px',        // 上下6px，左右20px
+            'padding': '10px 20px',        // 上下6px，左右20px
             'border-radius': '20px',      // 圆角胶囊形状
             'display': 'inline-block',    // 让背景只包裹文字，不占满整行
             'margin-bottom': '10px',      // 和下面内容拉开点距离
