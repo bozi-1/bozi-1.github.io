@@ -1,36 +1,45 @@
-// 在你的 JS 文件末尾，添加以下代码
+// === 网站运行时间脚本 (独立版) ===
 document.addEventListener('DOMContentLoaded', function() {
-    if (typeof footerConfig === 'undefined') return;
+    // 1. 配置你的建站时间 (格式: YYYY-MM-DD)
+    const startTime = "2026-08-12"; 
     
-    // 创建显示容器
-    let timerDiv = document.createElement('div');
-    timerDiv.id = 'web-time-run';
-    timerDiv.style.textAlign = 'center';
-    timerDiv.style.marginTop = '10px';
-    timerDiv.innerHTML = footerConfig.prefix + '<span id="runtime"></span>';
+    // 2. 创建显示时间的 HTML 结构
+    const timeDiv = document.createElement('div');
+    timeDiv.id = 'web-runtime';
+    timeDiv.style.textAlign = 'center';
+    timeDiv.style.marginTop = '10px';
+    timeDiv.style.fontSize = '14px';
+    timeDiv.style.color = '#666'; // 你可以根据背景调整颜色
+    timeDiv.innerHTML = '本站已运行：<span id="runtime-span">Loading...</span>';
+
+    // 3. 寻找页脚容器并插入
+    // Butterfly 主题通常使用 .footer-wrap 或 #footer
+    const footerContainer = document.querySelector('.footer-wrap') || document.getElementById('footer');
     
-    // 精准插入到页脚容器内（Butterfly主题的页脚ID通常是 #footer-wrap）
-    const footerWrap = document.getElementById('footer-wrap');
-    if (footerWrap) {
-        // 插入到页脚容器的最前面，这样就会在版权信息上方
-        footerWrap.insertBefore(timerDiv, footerWrap.firstChild);
-    } else {
-        // 如果找不到 #footer-wrap，就退而求其次，插入到 body 最后
-        document.body.appendChild(timerDiv);
+    if (footerContainer) {
+        // 将时间 div 添加到页脚容器的最前面或最后面
+        // appendChild 是加在最后，insertBefore 是加在最前
+        footerContainer.appendChild(timeDiv); 
     }
-    
-    // 启动计时器
-    function updateTime() {
-        let start = new Date(footerConfig.startTime).getTime();
-        let now = new Date().getTime();
-        let diff = now - start;
-        let days = Math.floor(diff / (1000 * 60 * 60 * 24));
-        let hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-        let minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
-        let seconds = Math.floor((diff % (1000 * 60)) / 1000);
-        document.getElementById('runtime').innerHTML = days + " 天 " + hours + " 时 " + minutes + " 分 " + seconds + " 秒";
+
+    // 4. 计算时间的函数
+    function updateRuntime() {
+        const now = new Date();
+        const start = new Date(startTime);
+        const diff = now - start;
+
+        if (diff > 0) {
+            const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+            const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+            const seconds = Math.floor((diff % (1000 * 60)) / 1000);
+
+            const timeString = `${days} 天 ${hours} 时 ${minutes} 分 ${seconds} 秒`;
+            document.getElementById('runtime-span').innerText = timeString;
+        }
     }
-    
-    updateTime();
-    setInterval(updateTime, 1000);
+
+    // 5. 启动定时器
+    setInterval(updateRuntime, 1000);
+    updateRuntime(); // 初始化执行一次，避免延迟
 });
