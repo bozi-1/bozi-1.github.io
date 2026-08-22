@@ -1,74 +1,36 @@
-// --- 网站运行时间脚本 (彻底修复版) ---
+// --- 纯净版运行时间 (只负责计算，不碰样式) ---
 (function() {
-    // 1. 设置你的建站时间
-    const startTime = new Date('2025-01-01T00:00:00+08:00'); 
-
-    // 2. 寻找页脚容器
-    let footer = document.getElementById('footer') || 
-                 document.querySelector('.footer-wrap') || 
-                 document.querySelector('footer');
+    const startTime = new Date('2026-08-12T00:00:00+08:00'); 
+    let footer = document.getElementById('footer');
 
     if (footer) {
-        // --- 核心修复：注入 CSS 强制清除伪元素和边框 ---
-        // 这是解决 "黑色区域" 和 "蓝边" 的关键
-        const style = document.createElement('style');
-        style.innerHTML = `
-            /* 强制让页脚及其伪元素完全透明 */
-            #footer, footer, .footer-wrap {
-                background: transparent !important;
-                background-color: transparent !important;
-                border: none !important;
-                border-top: none !important;
-                box-shadow: none !important;
-                outline: none !important;
-            }
-            /* 关键：清除那个导致黑色区域的 ::before 伪元素 */
-            #footer::before, footer::before, .footer-wrap::before {
-                display: none !important;
-                content: none !important;
-                background: none !important;
-            }
-        `;
-        document.head.appendChild(style);
+        // 创建时间容器
+        const runtimeDiv = document.createElement('div');
+        runtimeDiv.id = 'runtime';
+        
+        // 简单的内联样式，确保文字居中且白色
+        runtimeDiv.style.textAlign = 'center';
+        runtimeDiv.style.color = '#fff'; // 确保文字可见
+        runtimeDiv.style.padding = '10px 0';
+        runtimeDiv.style.fontSize = '14px';
+        
+        // 插入到页脚最前面或最后面
+        footer.insertBefore(runtimeDiv, footer.firstChild);
 
-        // --- 调整页脚布局 ---
-        footer.style.position = 'relative'; // 确保定位正常
-        footer.style.textAlign = 'center';
-        footer.style.padding = '15px 0';
-        footer.style.minHeight = 'auto';
-
-        // --- 插入运行时间 DIV ---
-        // 避免重复插入
-        if (!document.getElementById('runtime')) {
-            const runtimeDiv = document.createElement('div');
-            runtimeDiv.id = 'runtime';
+        function update() {
+            const now = new Date();
+            const diff = now - startTime;
             
-            // 设置文字样式
-            runtimeDiv.style.color = '#fff'; // 白色文字
-            runtimeDiv.style.fontSize = '14px';
-            runtimeDiv.style.lineHeight = '1.6';
-            runtimeDiv.style.width = '100%';
-            
-            footer.appendChild(runtimeDiv);
-
-            // --- 计算逻辑 ---
-            function updateRuntime() {
-                const now = new Date();
-                const diff = now - startTime;
-                
-                if (diff > 0) {
-                    const days = Math.floor(diff / (1000 * 60 * 60 * 24));
-                    const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-                    const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
-                    const seconds = Math.floor((diff % (1000 * 60)) / 1000);
-                    
-                    runtimeDiv.innerText = `本站已运行：${days}天 ${hours}时 ${minutes}分 ${seconds}秒`;
-                }
+            if (diff > 0) {
+                const d = Math.floor(diff / (1000 * 60 * 60 * 24));
+                const h = Math.floor((diff / (1000 * 60 * 60)) % 24);
+                const m = Math.floor((diff / (1000 * 60)) % 60);
+                const s = Math.floor((diff / 1000) % 60);
+                runtimeDiv.innerText = `本站已运行：${d}天 ${h}时 ${m}分 ${s}秒`;
             }
-
-            // 初始化并启动定时器
-            updateRuntime();
-            setInterval(updateRuntime, 1000);
         }
+        
+        setInterval(update, 1000);
+        update();
     }
 })();

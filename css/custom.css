@@ -200,3 +200,15 @@
 }
 
 /* --- 修复 END --- */
+/* 强制清除页脚伪元素背景（解决黑色色块） */
+#footer::before {
+    background: transparent !important;
+    display: none !important; /* 双重保险，直接隐藏 */
+}
+
+/* 强制清除页脚边框（解决蓝边） */
+#footer {
+    border: none !important;
+    box-shadow: none !important;
+    background: transparent !important;
+}
