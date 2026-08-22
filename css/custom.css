@@ -200,24 +200,3 @@
 }
 
 /* --- 修复 END --- */
-/* 清除页脚及 body 底部的默认边框/轮廓 */
-#footer, body {
-    border-bottom: none !important;
-    outline: none !important;
-    box-shadow: none !important;
-}
-
-/* 如果仍有蓝边，可尝试清除 html 标签的默认样式 */
-html {
-    border: none !important;
-    overflow-x: hidden; /* 防止横向滚动条引发额外边线 */
-}
-body {
-    display: flex;
-    flex-direction: column;
-    min-height: 100vh;
-}
-
-#footer {
-    margin-top: auto; /* 自动推到底部 */
-}
