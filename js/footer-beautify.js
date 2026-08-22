@@ -12,7 +12,7 @@ document.addEventListener('DOMContentLoaded', function() {
         footer.style.backgroundColor = '#363636'; 
         footer.style.padding = '20px 0'; 
         footer.style.textAlign = 'center';
-        footer.style.color = '#ccc'; // 字体颜色
+        footer.style.color = '#ffffffb3'; // 字体颜色
         
         // 确保它是最底层的块级元素
         footer.style.display = 'block'; 
@@ -24,7 +24,7 @@ document.addEventListener('DOMContentLoaded', function() {
         runtimeDiv.id = 'web-runtime';
         runtimeDiv.style.marginTop = '5px';
         runtimeDiv.style.fontSize = '14px';
-        runtimeDiv.innerHTML = '本站已运行：<span id="runtime-span">Loading...</span>';
+        runtimeDiv.innerHTML = '本站已存活：<span id="runtime-span">Loading...</span>';
 
         // 4. 将时间插入到页脚容器的最前面
         // 如果页脚里还有其他东西（比如社交图标），这会把它顶上去
