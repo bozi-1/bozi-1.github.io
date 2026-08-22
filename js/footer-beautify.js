@@ -1,47 +1,58 @@
-document.addEventListener('DOMContentLoaded', function() {
-    // ================= 配置区域 =================
-    const startTime = "2023-01-01"; // 【请修改】你的建站日期，格式：YYYY-MM-DD
-    // ===========================================
+// --- 网站运行时间脚本 (完整版) ---
+(function() {
+    // 1. 设置你的建站时间 (格式：YYYY-MM-DDTHH:MM:SS)
+    // 请修改下面引号里的时间为你的实际建站时间
+    const startTime = new Date('2026-08-12T00:00:00'); 
 
-    // 1. 获取页脚容器 (Butterfly 主题通常是 id="footer")
-    const footer = document.getElementById('footer');
+    // 2. 寻找页脚容器
+    // 这里尝试寻找常见的页脚 ID，如果找不到会自动尝试 footer 标签
+    let footer = document.getElementById('footer') || 
+                 document.getElementById('site-footer') || 
+                 document.querySelector('footer');
 
     if (footer) {
-        // --- 关键：不修改页脚样式！只插入内容 ---
-        // 找到页脚里原本放版权信息的 div (通常是 class="copyright" 或 "footer-content")
-        // 如果找不到，就直接在 footer 内部创建一个新 div
-        let contentDiv = footer.querySelector('.copyright') || footer.querySelector('.footer-content');
+        // --- 核心修复：强制清理页脚样式，消除色块交杂 ---
+        footer.style.backgroundColor = 'transparent'; // 背景透明
+        footer.style.border = 'none';                 // 去除边框
+        footer.style.boxShadow = 'none';              // 去除阴影
+        footer.style.textAlign = 'center';            // 父容器文字居中
+        footer.style.padding = '10px 0';              // 调整上下间距
         
-        if (!contentDiv) {
-            // 如果主题没有标准结构，就自己创建一个
-            contentDiv = document.createElement('div');
-            contentDiv.className = 'runtime-container';
-            footer.appendChild(contentDiv);
-        }
+        // --- 第二步：插入运行时间 DIV ---
+        const runtimeDiv = document.createElement('div');
+        runtimeDiv.id = 'runtime';
+        
+        // 设置这个 DIV 的样式
+        runtimeDiv.style.width = '100%';        // 强制占满宽度
+        runtimeDiv.style.textAlign = 'center';  // 强制文字居中
+        runtimeDiv.style.marginTop = '5px';     // 上方留一点空隙
+        runtimeDiv.style.color = '#ffffff';     // 字体颜色（白色）
+        runtimeDiv.style.fontSize = '14px';     // 字体大小
+        runtimeDiv.style.fontWeight = 'bold';   // 加粗
 
-        // 2. 创建运行时间的 span 元素
-        const runtimeSpan = document.createElement('span');
-        runtimeSpan.id = 'runtime';
-        runtimeSpan.style.marginTop = '10px'; // 可选：和上方内容留点空隙
-        runtimeSpan.style.display = 'block';  // 确保独占一行
-        contentDiv.appendChild(runtimeSpan);
+        // 将新 DIV 放入页脚
+        footer.appendChild(runtimeDiv);
 
-        // 3. 计算并更新运行时间
+        // --- 第三步：计算并更新时间 ---
         function updateRuntime() {
             const now = new Date();
-            const start = new Date(startTime);
-            const diff = now - start;
+            const diff = now - startTime;
 
-            const days = Math.floor(diff / (1000 * 60 * 60 * 24));
-            const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-            const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
-            const seconds = Math.floor((diff % (1000 * 60)) / 1000);
+            if (diff > 0) {
+                const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+                const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+                const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+                const seconds = Math.floor((diff % (1000 * 60)) / 1000);
 
-            runtimeSpan.textContent = `本站已运行：${days} 天 ${hours} 时 ${minutes} 分 ${seconds} 秒`;
+                // 更新文字内容
+                runtimeDiv.innerHTML = `本站已运行：${days}天 ${hours}时 ${minutes}分 ${seconds}秒`;
+            }
         }
 
-        // 立即执行一次，然后每秒更新
+        // 立即运行一次，然后每秒更新
         updateRuntime();
         setInterval(updateRuntime, 1000);
+    } else {
+        console.log('未找到页脚元素，运行时间无法显示');
     }
-});
+})();
