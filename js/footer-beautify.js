@@ -1,31 +1,37 @@
 document.addEventListener('DOMContentLoaded', function() {
     // 1. 配置你的建站时间
-    const startTime = "2023-01-01"; // 请修改为你的实际建站日期
+    const startTime = "2026-08-12"; // 请修改为你的实际建站日期
 
     // 2. 寻找页脚的主容器 (Butterfly 主题通常是 #footer)
     const footer = document.getElementById('footer');
 
-    if (footer) {
-        // --- 【关键步骤】强制修复方框样式 ---
-        // 因为你删掉了版权信息，方框可能塌了。这里强制给它加上背景和内边距。
-        // 注意：这里的 '#363636' 是深灰色背景，如果你的主题是浅色，请改成 'white' 或 '#fff'
-        footer.style.backgroundColor = '#363636'; 
-        footer.style.padding = '20px 0'; 
-        footer.style.textAlign = 'center';
-        footer.style.color = '#ffffffb3'; // 字体颜色
-        
-        // 确保它是最底层的块级元素
-        footer.style.display = 'block'; 
-        footer.style.width = '100%';
-        // ----------------------------------
+    // ...前面的代码不变...
 
-        // 3. 创建运行时间的 HTML
-        const runtimeDiv = document.createElement('div');
-        runtimeDiv.id = 'web-runtime';
-        runtimeDiv.style.marginTop = '5px';
-        runtimeDiv.style.fontSize = '14px';
-        runtimeDiv.innerHTML = '本站已存活：<span id="runtime-span">Loading...</span>';
+if (footer) {
+    // === 核心样式修复 ===
+    footer.style.backgroundColor = 'transparent'; // 1. 设为透明，让它融入背景图（如果你想要黑色条，就改成 '#333'）
+    footer.style.padding = '20px 0';              // 2. 上下留点空隙，别太挤
+    footer.style.textAlign = 'center';            // 3. 文字居中
+    footer.style.lineHeight = '1.5';              // 4. 行高舒适一点
+    
+    // 5. 【关键】强制把页脚推到底部 (Flex布局)
+    // 如果你的主题支持，这行代码能让页脚永远吸附在视口最下方
+    // footer.style.position = 'relative'; 
+    // footer.style.bottom = '0';
+    // footer.style.width = '100%';
 
+    // --- 插入运行时间 HTML ---
+    const timeDiv = document.createElement('div');
+    timeDiv.id = 'web-runtime';
+    timeDiv.style.color = '#fff'; // 字体颜色：白色（如果是浅色背景请改成 #333）
+    timeDiv.style.fontSize = '14px';
+    timeDiv.style.fontWeight = 'bold';
+    timeDiv.innerHTML = '本站已运行：<span id="runtime-span">Loading...</span>';
+    
+    // 清空页脚原有内容（防止有残留的空标签），然后插入时间
+    footer.innerHTML = ''; 
+    footer.appendChild(timeDiv);
+}
         // 4. 将时间插入到页脚容器的最前面
         // 如果页脚里还有其他东西（比如社交图标），这会把它顶上去
         if (footer.firstChild) {
@@ -54,4 +60,4 @@ document.addEventListener('DOMContentLoaded', function() {
         setInterval(updateRuntime, 1000);
         updateRuntime(); // 立即执行一次，避免等待1秒
     }
-});
+);
