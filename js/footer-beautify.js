@@ -1,46 +1,50 @@
 document.addEventListener('DOMContentLoaded', function() {
-    // 1. 配置你的建站时间
-    const startTime = "2026-08-12"; // 请修改为你的实际建站日期
+    // ================= 配置区域 =================
+    const startTime = "2026-08-12"; // 【请修改】你的建站日期，格式：YYYY-MM-DD
+    // ===========================================
 
-    // 2. 寻找页脚的主容器 (Butterfly 主题通常是 #footer)
+    // 1. 获取页脚容器 (Butterfly 主题通常是 id="footer")
     const footer = document.getElementById('footer');
 
-    // ...前面的代码不变...
+    if (footer) {
+        // --- 第一步：强力修复页脚样式 ---
+        // 既然删掉了版权信息，我们需要手动把页脚的“壳子”撑起来
+        
+        // 设置背景色：这里用了深灰色 (#2d2d2d)，如果你想透明，改成 'transparent'
+        footer.style.backgroundColor = '#0000004d'; 
+        
+        // 设置内边距：上下各 20px，左右自动
+        footer.style.padding = '20px 0'; 
+        
+        // 确保宽度占满全屏，防止缩成一团
+        footer.style.width = '100%'; 
+        
+        // 文字居中
+        footer.style.textAlign = 'center'; 
+        
+        // 字体颜色：浅灰色，配合深色背景
+        footer.style.color = '#aaa'; 
+        
+        // 字体大小
+        footer.style.fontSize = '14px'; 
 
-if (footer) {
-    // === 核心样式修复 ===
-    footer.style.backgroundColor = 'transparent'; // 1. 设为透明，让它融入背景图（如果你想要黑色条，就改成 '#333'）
-    footer.style.padding = '20px 0';              // 2. 上下留点空隙，别太挤
-    footer.style.textAlign = 'center';            // 3. 文字居中
-    footer.style.lineHeight = '1.5';              // 4. 行高舒适一点
-    
-    // 5. 【关键】强制把页脚推到底部 (Flex布局)
-    // 如果你的主题支持，这行代码能让页脚永远吸附在视口最下方
-    // footer.style.position = 'relative'; 
-    // footer.style.bottom = '0';
-    // footer.style.width = '100%';
+        // 清除可能存在的旧边框或阴影（可选）
+        footer.style.borderTop = 'none'; 
+        footer.style.boxShadow = 'none';
 
-    // --- 插入运行时间 HTML ---
-    const timeDiv = document.createElement('div');
-    timeDiv.id = 'web-runtime';
-    timeDiv.style.color = '#fff'; // 字体颜色：白色（如果是浅色背景请改成 #333）
-    timeDiv.style.fontSize = '14px';
-    timeDiv.style.fontWeight = 'bold';
-    timeDiv.innerHTML = '本站已运行：<span id="runtime-span">Loading...</span>';
-    
-    // 清空页脚原有内容（防止有残留的空标签），然后插入时间
-    footer.innerHTML = ''; 
-    footer.appendChild(timeDiv);
-}
-        // 4. 将时间插入到页脚容器的最前面
-        // 如果页脚里还有其他东西（比如社交图标），这会把它顶上去
-        if (footer.firstChild) {
-            footer.insertBefore(runtimeDiv, footer.firstChild);
-        } else {
-            footer.appendChild(runtimeDiv);
-        }
+        // --- 第二步：创建运行时间的显示区域 ---
+        const timeDiv = document.createElement('div');
+        timeDiv.id = 'web-runtime';
+        timeDiv.style.marginTop = '5px'; // 稍微留点上边距
+        
+        // 初始文字
+        timeDiv.innerHTML = '本站已运行：<span id="runtime-span" style="color: #fff; font-weight: bold;">Loading...</span>';
 
-        // 5. 计算时间的逻辑
+        // --- 第三步：将时间插入到页脚中 ---
+        // 使用 appendChild 把它放到页脚的最后面
+        footer.appendChild(timeDiv);
+
+        // --- 第四步：计算时间的逻辑 ---
         function updateRuntime() {
             const now = new Date();
             const start = new Date(startTime);
@@ -51,13 +55,19 @@ if (footer) {
                 const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
                 const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
                 const seconds = Math.floor((diff % (1000 * 60)) / 1000);
-                
+
                 const timeString = `${days} 天 ${hours} 时 ${minutes} 分 ${seconds} 秒`;
                 document.getElementById('runtime-span').innerText = timeString;
+            } else {
+                document.getElementById('runtime-span').innerText = "时间未到";
             }
         }
 
+        // 立即执行一次，然后每秒更新
+        updateRuntime();
         setInterval(updateRuntime, 1000);
-        updateRuntime(); // 立即执行一次，避免等待1秒
+        
+    } else {
+        console.warn("未找到页脚容器 (#footer)，请检查主题版本或 ID 名称。");
     }
-);
+});
